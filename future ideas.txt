@@ -1,0 +1,11 @@
+username validation
+	- Checks if the username is non-empty.
+	- Ensures the username length is between 3 and 20 characters.
+	- Validates that the username contains only letters, numbers, and underscores using a regular expression.
+
+password complexlity requirements:
+	- ensure the password is at least 8 chars long, one uppercase, one lowercase, one digit, one special char
+
+lockout mechanism:
+	- tracks the number of failed attempts and locks user out for 5 minutes after 3 failed attempts
+	- lockout duration and threshold are stored in the db

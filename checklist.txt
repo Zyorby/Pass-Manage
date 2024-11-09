@@ -1,0 +1,19 @@
+step 1:
+	make initial database (mysql) DONE
+	create login/account creation page(s)  (custom tkinter) DONE
+	master password validation (using bcrypt) DONE
+	duplicate username check DONE
+	encrypted connection to database FOR THE FUTURE
+step 2:
+	password encrypting logic
+	password decrypting logic
+	password retrieval
+	password storage
+	maybe make the main ui page here?
+step 3:
+	make a password generator and finish main ui
+step 4:
+	implement Multi Factor Auth (prob the google auth api)
+	clipboard functionality
+	backup functionality (future)
+	TEST IT
