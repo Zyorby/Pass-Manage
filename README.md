@@ -2,6 +2,24 @@
 
 A simple yet secure password manager built with Python and **CustomTkinter** for the UI. This application allows users to store their account names and passwords in a local MySQL database with bcrypt and AES encryption for added security.
 
+## Progress
+- **login**
+- **Database structure**
+- **Create Account**
+- **Unreversible Master Key**
+
+## TODO
+- **main ui page**
+- **storing and retreiving passwords**
+- **adding/deleting/editing passwords**
+- **password generation**
+- **password encryption**
+- **MFA**
+- **clipboard functionality**
+- **backup functionality**
+- **Master key recovery**
+- **database security/encryption (prob ssl)**
+
 ## Features
 
 - **Account Management**: Add, view, and manage accounts and their passwords.
