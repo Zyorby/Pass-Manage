@@ -1,6 +1,7 @@
 import mysql.connector
 import customtkinter
 import bcrypt
+from PIL import Image
 
 # Connect to MySQL database
 mydb = mysql.connector.connect(
@@ -16,11 +17,11 @@ customtkinter.set_default_color_theme("green")
 
 # Initialize root window
 root = customtkinter.CTk()
-root.geometry('300x400')
 
 # Function to switch between frames
-def show_frame(frame, title):
+def show_frame(frame, title, size):
     root.title(title)
+    root.geometry(size)
     frame.tkraise()
 
 
@@ -55,7 +56,7 @@ def create_account():
 
     mydb.commit()
 
-    show_frame(login_frame, "Login")
+    show_frame(login_frame, "Login", '300x400')
 
 
 def login_account():
@@ -76,12 +77,20 @@ def login_account():
         # Compare the entered password with the hashed password in the database
         if bcrypt.checkpw(password.encode('utf-8'), stored_hashed_password.encode('utf-8')):
             login_error_label.configure(text="Login Succesful", text_color="green")
-            show_frame(home_frame, "Password Manager")
+            show_frame(home_frame, "Password Manager", '1280x720')
         else:
             login_error_label.configure(text="Incorrect password", text_color="red")
     else:
         login_error_label.configure(text="Username not found", text_color="red")
 
+def toggle_pass(entry_widget, image_label):
+    current_show = entry_widget.cget("show")
+    if current_show == "*":
+        entry_widget.configure(show="")
+        image_label.configure(image=eye_open_image)
+    else:
+        entry_widget.configure(show="*")
+        image_label.configure(image=eye_closed_image)
 
 # === Login Page Frame ===
 login_frame = customtkinter.CTkFrame(root)
@@ -89,7 +98,7 @@ login_frame.place(relwidth=1, relheight=1)
 
 # Username label and entry
 user_frame = customtkinter.CTkFrame(login_frame)
-user_frame.pack(pady=(50, 10))
+user_frame.pack(pady=(50, 10), padx=(0, 28))
 
 user_label = customtkinter.CTkLabel(user_frame, text="Username:")
 user_label.pack(side="left", padx=5)
@@ -104,8 +113,19 @@ pass_frame.pack(pady=10)
 pass_label = customtkinter.CTkLabel(pass_frame, text="Password:")
 pass_label.pack(side="left", padx=5)
 
+#preload images
+eye_open_image = customtkinter.CTkImage(dark_image=Image.open("eye_open.png",), size=(20, 20))
+eye_closed_image = customtkinter.CTkImage(dark_image=Image.open("eye_closed.png"), size=(20, 20))
+
 pass_entry = customtkinter.CTkEntry(pass_frame, show="*")
-pass_entry.pack(side="right", padx=5)
+pass_entry.pack(side="left", padx=5)
+
+#orignally eye closed
+image_label = customtkinter.CTkLabel(pass_frame, image=eye_closed_image, text="")
+image_label.pack(side="right", padx=5)
+
+# Bind the label click event to toggle password visibility
+image_label.bind("<Button-1>", lambda e: toggle_pass(pass_entry, image_label))
 
 # Error label for login
 login_error_label = customtkinter.CTkLabel(login_frame, text="", font=("Arial", 12))
@@ -122,7 +142,7 @@ pass_entry.bind('<Return>', lambda event: login_account())
 # Button to navigate to the Create Account page
 create_button = customtkinter.CTkButton(
     login_frame, text="Create Account", fg_color="red", hover_color="indian red",
-    command=lambda: show_frame(create_account_frame, "Account Creation")
+    command=lambda: show_frame(create_account_frame, "Account Creation", '300x400')
 )
 create_button.pack(pady=(10, 0))
 
@@ -150,7 +170,7 @@ account_error_label.pack(pady=(10, 20))
 # Button to go back to the login page
 back_button = customtkinter.CTkButton(
     create_account_frame, text="Back to Login",
-    command=lambda: show_frame(login_frame, "Login")
+    command=lambda: show_frame(login_frame, "Login", '300x400')
 )
 back_button.pack(pady=(20, 0))
 
@@ -170,7 +190,7 @@ home_label.pack()
 
 
 # Start by showing the login frame
-show_frame(login_frame, "Login")
+show_frame(login_frame, "Login", '300x400')
 
 # Start main loop
 root.mainloop()
