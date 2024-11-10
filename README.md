@@ -19,6 +19,7 @@ A simple yet secure password manager built with Python and **CustomTkinter** for
 - **backup functionality**
 - **Master key recovery**
 - **database security/encryption (prob ssl)**
+- **password & username complexity requirements**
 
 ## Features
 
